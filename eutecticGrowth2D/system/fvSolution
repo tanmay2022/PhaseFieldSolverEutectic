@@ -27,9 +27,27 @@ solvers
         relTol                    0.0;
     }
 
-	phi
+	phi_alpha
     {
-	    solver                    smoothSolver;
+	solver                    smoothSolver;
+        preconditioner            DIC;
+        smoother                symGaussSeidel;
+        tolerance                1e-6;
+        relTol                    0.0;
+    }
+
+	phi_beta
+    {
+	solver                    smoothSolver;
+        preconditioner            DIC;
+        smoother                symGaussSeidel;
+        tolerance                1e-6;
+        relTol                    0.0;
+    }
+
+	phi_liq
+    {
+	solver                    smoothSolver;
         preconditioner            DIC;
         smoother                symGaussSeidel;
         tolerance                1e-6;

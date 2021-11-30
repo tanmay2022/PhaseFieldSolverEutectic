@@ -17,24 +17,18 @@ FoamFile
 
 dimx        dimx [0 1 0 0 0 0 0] 1; //Dimension of position
 dimt        dimt [0 0 1 0 0 0 0] 1; //Dimension of time
-m_0         m_0 [0 0 0 0 0 0 0] 1e9; //Slope solidus
-m_1         m_1 [0 0 0 0 0 0 0] 0.45; //Slope liquidus
-omega       omega [0 0 0 0 0 0 0] 1.687; //Relaxation coefficient for phi (order parameter)
-gamma       gamma [0 0 0 0 0 0 0] 1; //Surface Energy
-epsilon     epsilon [0 0 0 0 0 0 0] 48; //Interface Width
-c_Sol       c_Sol [0 0 0 0 0 0 0] 0.78; //Composition of solid in equilibrium with liquid
-c_Liq       c_Liq [0 0 0 0 0 0 0] 0.45; //Composition of liquid in equilibrium with solid
-c_eq        c_eq [0 0 0 0 0 0 0] 0.5; //Equilibrium composition or average composition of alloy
-diff_Sol    diff_Sol [0 0 0 0 0 0 0] 1; //Diffusivity in solid
-diff_Liq    diff_Liq [0 0 0 0 0 0 0] 1; //Diffusivity in liquid
-anti_trap   anti_trap [0 0 0 0 0 0 0] 0.35355; //Antitrapping coefficient
+ms_alpha    ms_alpha [0 0 0 0 0 0 0] -0.5; //Slope liq-alpha and alpha-liq
+ms_beta     ms_beta [0 0 0 0 0 0 0] 0.5; //Slope liq-beta and beta-liq
+c_eq_liq    c_eq_liq [0 0 0 0 0 0 0] 0.5; //Eutectic composition of liquid phase
+c_eq_alpha  c_eq_alpha [0 0 0 0 0 0 0] 0.2; //Eutectic composition of alpha phase
+c_eq_beta   c_eq_beta [0 0 0 0 0 0 0] 0.8; //Eutectic composition of beta phase
 G           G [0 0 0 0 0 0 0] 1.7e-5; //Thermal gradient
 v           v [0 0 0 0 0 0 0] 0.001; //Velocity
-noise_mag           noise_mag [0 0 0 0 0 0 0] 0.003; //Noise magnitude
-initial           initial [0 0 0 0 0 0 0] 0.93; //Constant value from temperature profile
-T0         	 T0 [0 0 0 0 0 0 0] 1.0; //Melting temperature
-T         	 T0 [0 0 0 0 0 0 0] 0.93; //Operating temperature
-delta_01         delta_01 [0 0 0 0 0 0 0] 0.02; //Strength of anisotropy
-A            A [0 0 0 0 0 0 0] 1;
-B            B [0 0 0 0 0 0 0] 1;
+A           A [0 0 0 0 0 0 0] 1.0;
+D           D [0 0 0 0 0 0 0] 1.0; //Diffusivity in liquid
+T_eut       T_eut [0 0 0 0 0 0 0] 1.0; //Eutectic temperature
+initial     initial [0 0 0 0 0 0 0] 0.93; //Constant value from temperature profile
+tau         tau [0 0 0 0 0 0 0] 0.144; //Relaxation coefficient
+gamma       gamma [0 0 0 0 0 0 0] 1.0; //Interface energy parameter
+epsilon     epsilon [0 0 0 0 0 0 0] 4.0; //Interface width parameter
 // ************************************************************************* //

@@ -25,11 +25,11 @@ boundaryField
 {
     floor
     {
-        type            symmetryPlane;
+        type            cyclic;
     }
-    left
+    ceiling
     {
-        type            zeroGradient;
+        type            cyclic;
     }
     sideSolid
     {

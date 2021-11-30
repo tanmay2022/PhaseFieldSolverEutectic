@@ -14,12 +14,12 @@ It contains the R Markdown files for creating the HTML (userGuide.html) and PDF 
 
 ## eutecticGrowth2D
 
-It contains the OpenFOAM case files required to run the free growth problem.
+It contains the OpenFOAM case files required to run the 2D eutectic growth problem.
 
 ## lamelar3D
 
-
+It contains the OpenFOAM case files required to run the 3D lamelar microstructure problem.
 
 ## rod3D
 
-It contains the OpenFOAM case files required to run the directional solidification problem.
+It contains the OpenFOAM case files required to run the 3D rod microstructure problem.

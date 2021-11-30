@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Phase-field Solver for Eutectic Transformation: Main Page</title>
+<title>Phase-field Solver for Eutectic Transformation: Code-guide for solver eutectic</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -81,11 +81,31 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">Phase-field Solver for Eutectic Transformation Documentation</div>  </div>
+<div class="title">Code-guide for solver eutectic </div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p>The solver has been successfully tested using OpenFOAM v6.</p>
+<h1><a class="anchor" id="s1"></a>
+Compiling the solver</h1>
+<ul>
+<li>Following commands should create the executable of the solver <blockquote class="doxtable">
+<p>cd $FOAM_RUN/PhaseFieldSolverEutectic/eutectic </p>
+</blockquote>
+<blockquote class="doxtable">
+<p>wclean </p>
+</blockquote>
+<blockquote class="doxtable">
+<p>wmake </p>
+</blockquote>
+</li>
+<li>The solver can be run by following the instructions in <em>userGuide</em>.</li>
+</ul>
+<h1><a class="anchor" id="s2"></a>
+Further details</h1>
+<p>The implementation, client and header files of the solver have been written following OpenFOAM conventions. These are explained next with flow charts generated from the source code using Doxygen. It must be noted that the solver is based on <a href="https://www.openfoam.com/documentation/guides/latest/doc/guide-applications-solvers-basic-laplacianFoam.html" title="laplacianFoam">laplacianFoam</a> solver within OpenFOAM. Hence, it may be helpful for the user to become familiar with <a href="http://foam.sourceforge.net/docs/Guides-a4/ProgrammersGuide.pdf" title="OpenFOAM Programmer’s Guide">OpenFOAM Programmer’s Guide</a> and <a href="https://www.openfoam.com/documentation/guides/latest/doc/guide-applications-solvers-basic-laplacianFoam.html" title="laplacianFoam">laplacianFoam</a> beforehand. </p>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

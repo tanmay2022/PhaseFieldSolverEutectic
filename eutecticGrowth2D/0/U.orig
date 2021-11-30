@@ -23,20 +23,15 @@ boundaryField
 {
     floor
     {
-        type            symmetryPlane;
-//		type            empty;
-        //value         uniform 0;
+        type            cyclic;
     }
-    left
+    ceiling
     {
-       type            zeroGradient;
-	//	type            empty;
-        //value         uniform 0;
+        type            cyclic;
     }
     sideSolid
     {
         type            zeroGradient;
-        //value         uniform 0;
     }
 
 }

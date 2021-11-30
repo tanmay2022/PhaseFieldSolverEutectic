@@ -25,6 +25,10 @@
 var NAVTREE =
 [
   [ "Phase-field Solver for Eutectic Transformation", "index.html", [
+    [ "Code-guide for solver eutectic", "index.html", [
+      [ "Compiling the solver", "index.html#s1", null ],
+      [ "Further details", "index.html#s2", null ]
+    ] ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [

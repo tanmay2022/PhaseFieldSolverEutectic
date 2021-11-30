@@ -15,7 +15,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 
-application     phaseFieldDynamic;
+application     eutectic;
 
 startFrom       startTime;
 

@@ -11,7 +11,7 @@ FoamFile
     format      ascii;
     class       volScalarField;
     location    "0";
-    object      phi;
+    object      T;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -25,11 +25,11 @@ boundaryField
 {
     floor
     {
-        type            symmetryPlane;
+        type            cyclic;
     }
-    left
+    ceiling
     {
-        type            zeroGradient;
+        type            cyclic;
     }
     sideSolid
     {
