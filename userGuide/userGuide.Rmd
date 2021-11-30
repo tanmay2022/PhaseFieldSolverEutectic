@@ -1,5 +1,5 @@
 ---
-title: "Phase-field Solver with Dynamic Interface Refinement"
+title: "Phase-field Solver for Eutectic Transformation"
 author: "Tanmay Dutta"
 date: "November 10, 2021"
 output:
@@ -41,10 +41,10 @@ The problem is defined as follows:
 knitr::include_graphics('geom2d.png')
 ```
 
-***Governing equations*** The basic idea of the phase-field model consists in the description of the evolution of individual phases using the corresponding set of order parameters (the phase-field variables). For each phase, the associated phase-field variable is equal to 1 inside the phase and vanishes to 0 outside the area occupied by the considered phase. The transition of phase fields from 1 to 0 at the phase boundaries is continuous and smooth, i.e.,the phase boundaries are represented by diffuse interfaces with a finite thickness. The three phases, $\alpha$, $\beta$ and liquid phase are described by three phase fields $\phi_i$, with $i = \alpha$, $\beta$, liq, representing the volume fractions. The state of the binary eutectic system is described by the order parameter $\textbf{\phi} = \{\phi_{\alpha}, \phi_{\beta}, \phi_{liq}\}$, the chemical potential $\mu$, and the temperature $T$. The constraints on individual order parameters are:
+***Governing equations*** The basic idea of the phase-field model consists in the description of the evolution of individual phases using the corresponding set of order parameters (the phase-field variables). For each phase, the associated phase-field variable is equal to 1 inside the phase and vanishes to 0 outside the area occupied by the considered phase. The transition of phase fields from 1 to 0 at the phase boundaries is continuous and smooth, i.e.,the phase boundaries are represented by diffuse interfaces with a finite thickness. The three phases, $\alpha$, $\beta$ and liquid phase are described by three phase fields $\phi_i$, with $i = \alpha$, $\beta$, liq, representing the volume fractions. The state of the binary eutectic system is described by the order parameter ${\Phi} = \{\phi_{\alpha}, \phi_{\beta}, \phi_{liq}\}$, the chemical potential $\mu$, and the temperature $T$. The constraints on individual order parameters are:
 
 $$
-\phi_i \epsilon [0, 1] \forall i \\
+\phi_i~\epsilon~[0, 1]~\forall~i \\
 \sum_i \phi_i = 1
 \tag{2}
 \label{2}
@@ -54,27 +54,27 @@ $$
 
 $$
 \begin{aligned}
-&{\tau}{\epsilon}{\frac {\partial \phi_i} {\partial t}} = -{\frac {2} {3}} \left[-{\epsilon}\left({\nabla}\cdot{\frac {\partial a({\nabla}\textbf{\phi})} {\partial {\nabla}\phi_i}}\right) + {\frac {1} {\epsilon}}{\frac {\partial w(\textbf{\phi})} {\partial \phi_i}} + {\frac {\partial \Psi(T,\mu,\textbf{\phi})} {\partial \phi_i}} \right] \\
-&+ {\frac {1} {3}} \left[-{\epsilon}\left({\nabla}\cdot{\frac {\partial a({\nabla}\textbf{\phi})} {\partial {\nabla}\phi_j}}\right) + {\frac {1} {\epsilon}}{\frac {\partial w(\textbf{\phi})} {\partial \phi_j}} + {\frac {\partial \Psi(T,\mu,\textbf{\phi})} {\partial \phi_j}} \right] \\
-&+ {\frac {1} {3}} \left[-{\epsilon}\left({\nabla}\cdot{\frac {\partial a({\nabla}\textbf{\phi})} {\partial {\nabla}\phi_k}}\right) + {\frac {1} {\epsilon}}{\frac {\partial w(\textbf{\phi})} {\partial \phi_k}} + {\frac {\partial \Psi(T,\mu,\textbf{\phi})} {\partial \phi_k}} \right]
+&{\tau}{\epsilon}{\frac {\partial \phi_i} {\partial t}} = -{\frac {2} {3}} \left[-{\epsilon}\left({\nabla}\cdot{\frac {\partial a({\nabla}{\Phi})} {\partial {\nabla}\phi_i}}\right) + {\frac {1} {\epsilon}}{\frac {\partial w({\Phi})} {\partial \phi_i}} + {\frac {\partial \Psi(T,\mu,{\Phi})} {\partial \phi_i}} \right] \\
+&+ {\frac {1} {3}} \left[-{\epsilon}\left({\nabla}\cdot{\frac {\partial a({\nabla}{\Phi})} {\partial {\nabla}\phi_j}}\right) + {\frac {1} {\epsilon}}{\frac {\partial w({\Phi})} {\partial \phi_j}} + {\frac {\partial \Psi(T,\mu,{\Phi})} {\partial \phi_j}} \right] \\
+&+ {\frac {1} {3}} \left[-{\epsilon}\left({\nabla}\cdot{\frac {\partial a({\nabla}{\Phi})} {\partial {\nabla}\phi_k}}\right) + {\frac {1} {\epsilon}}{\frac {\partial w({\Phi})} {\partial \phi_k}} + {\frac {\partial \Psi(T,\mu,{\Phi})} {\partial \phi_k}} \right]
 \end{aligned}
 \tag{3}
 \label{3}
 $$
 where $i$, $j$ and $k$ are all different and $\epsilon ~\{\alpha, \beta, liq\}$; $\tau$ is the relaxation constant which influences the kinetics of the phase transformation at the interfaces.
 
-* The double well potential $w(\textbf{\phi})$ can be written as:
+* The double well potential $w({\Phi})$ can be written as:
 
 $$
-w(\textbf{\phi}) = \sum_i 9{\gamma}{\phi_i}^2(1-{\phi_i})^2
+w({\Phi}) = \sum_i 9{\gamma}{\phi_i}^2(1-{\phi_i})^2
 \tag{4}
 \label{4}
 $$
 
-* The gradient energy density, $a({\nabla}\textbf{\phi})$ has the form:
+* The gradient energy density, $a({\nabla}{\Phi})$ has the form:
 
 $$
-a({\nabla}\textbf{\phi}) = \sum_i {\gamma} |{\nabla}{\phi_i}|^2
+a({\nabla}{\Phi}) = \sum_i {\gamma} |{\nabla}{\phi_i}|^2
 \tag{5}
 \label{5}
 $$
@@ -83,11 +83,11 @@ where ${\gamma}$ controls the interfacial energy of the system and is known as s
 * The grand potential $\Psi (T,\mu,\phi)$ can be expressed as sum of grand potential of phases present in the system:
 
 $$
-\Psi (T,\mu,\textbf{\phi}) = \sum_i \Psi_i (T,\mu) h_i(\textbf{\phi})
+\Psi (T,\mu,{\Phi}) = \sum_i \Psi_i (T,\mu) h_i({\Phi})
 \tag{6}
 \label{6}
 $$
-where \Psi_i (T,\mu) for the three phases are the following:
+where $\Psi_i (T,\mu)$ for the three phases are the following:
 
 $$
 \Psi_\alpha (T,\mu) = -A \left({\frac {\mu - B_\alpha} {2A}}\right)^2 + D_\alpha(T) \\
@@ -110,7 +110,7 @@ D_{liq} (T) = 0
 $$
 where $c^{eut}_i$ are the $\alpha$, $\beta$ and liquid phase compositions at the eutectic temperature, $T^{eut}$. The liquidus slopes for $\alpha-liq$ phase equilibrium is denoted by $m_{liq-\alpha}$ while the corresponding solidus slope by $m_{\alpha-liq}$ and similar notation is followed for the $\beta-liq$ phase equilibrium.
 
-* In equation (6), $h_i(\textbf{\phi})$ is an interpolation function given as:
+* In equation (6), $h_i({\Phi})$ is an interpolation function given as:
 
 $$
 h_i = {\frac {{\phi_i}^2} {4}} [15(1 - \phi_i)\{1 + \phi_i - (\phi_k - \phi_j)^2\} + {\phi_i}(9{\phi_i}^2 - 5)]
@@ -123,9 +123,9 @@ These interpolation functions make sure that at the interface of phases $i$ and 
 
 $$
 \begin{aligned}
-&{\tau}{\epsilon}{\frac {\partial \phi_i} {\partial t}} = -{\frac {2} {3}} \left[-2{\gamma}{\epsilon}{\nabla}^2 {\phi_i} + {\frac {1} {\epsilon}}{\frac {\partial w(\textbf{\phi})} {\partial \phi_i}} + \Psi_i (T,\mu) {\frac {\partial h_i(\textbf{\phi})} {\partial \phi_i}} \right] \\
-&+ {\frac {1} {3}} \left[-2{\gamma}{\epsilon}{\nabla}^2 {\phi_j} + {\frac {1} {\epsilon}}{\frac {\partial w(\textbf{\phi})} {\partial \phi_j}} + \Psi_j (T,\mu) {\frac {\partial h_j(\textbf{\phi})} {\partial \phi_j}} \right] \\
-&+ {\frac {1} {3}} \left[-2{\gamma}{\epsilon}{\nabla}^2 {\phi_k} + {\frac {1} {\epsilon}}{\frac {\partial w(\textbf{\phi})} {\partial \phi_k}} + \Psi_k (T,\mu) {\frac {\partial h_k(\textbf{\phi})} {\partial \phi_k}} \right]
+&{\tau}{\epsilon}{\frac {\partial \phi_i} {\partial t}} = -{\frac {2} {3}} \left[-2{\gamma}{\epsilon}{\nabla}^2 {\phi_i} + {\frac {1} {\epsilon}}{\frac {\partial w({\Phi})} {\partial \phi_i}} + \Psi_i (T,\mu) {\frac {\partial h_i({\Phi})} {\partial \phi_i}} \right] \\
+&+ {\frac {1} {3}} \left[-2{\gamma}{\epsilon}{\nabla}^2 {\phi_j} + {\frac {1} {\epsilon}}{\frac {\partial w({\Phi})} {\partial \phi_j}} + \Psi_j (T,\mu) {\frac {\partial h_j({\Phi})} {\partial \phi_j}} \right] \\
+&+ {\frac {1} {3}} \left[-2{\gamma}{\epsilon}{\nabla}^2 {\phi_k} + {\frac {1} {\epsilon}}{\frac {\partial w({\Phi})} {\partial \phi_k}} + \Psi_k (T,\mu) {\frac {\partial h_k({\Phi})} {\partial \phi_k}} \right]
 \end{aligned}                    
 \tag{10}
 \label{10}
@@ -135,7 +135,7 @@ $$
 
 $$
 \begin{aligned}
-&\left[\sum_i {\frac {\partial c_i} {\partial \mu}} h_i(\textbf{\phi})\right]{\frac {\partial \mu} {\partial t}} + \sum_i c_i \left(\sum_n {\frac {\partial h_i} {\partial \phi_n}} {\frac {\partial \phi_n} {\partial t}} \right) \\
+&\left[\sum_i {\frac {\partial c_i} {\partial \mu}} h_i({\Phi})\right]{\frac {\partial \mu} {\partial t}} + \sum_i c_i \left(\sum_n {\frac {\partial h_i} {\partial \phi_n}} {\frac {\partial \phi_n} {\partial t}} \right) \\
 &= \nabla \cdot \left(D \phi_{liq} {\frac {\partial c_{liq} (T,\mu)} {\partial \mu}} \nabla \mu \right) - \nabla \cdot j_{at}
 \end{aligned}
 \tag{11}
@@ -169,9 +169,9 @@ All terms in the above equation are used in the nondimensional form, so $\epsilo
 
 $$
 \begin{aligned}
-&{\tau}{\epsilon}{\frac {\partial \phi_i} {\partial t}} - v{\frac {\partial \phi_i} {\partial x}} = -{\frac {2} {3}} \left[-2{\gamma}{\epsilon}{\nabla}^2 {\phi_i} + {\frac {1} {\epsilon}}{\frac {\partial w(\textbf{\phi})} {\partial \phi_i}} + \Psi_i (T,\mu) {\frac {\partial h_i(\textbf{\phi})} {\partial \phi_i}} \right] \\
-&+ {\frac {1} {3}} \left[-2{\gamma}{\epsilon}{\nabla}^2 {\phi_j} + {\frac {1} {\epsilon}}{\frac {\partial w(\textbf{\phi})} {\partial \phi_j}} + \Psi_j (T,\mu) {\frac {\partial h_j(\textbf{\phi})} {\partial \phi_j}} \right] \\
-&+ {\frac {1} {3}} \left[-2{\gamma}{\epsilon}{\nabla}^2 {\phi_k} + {\frac {1} {\epsilon}}{\frac {\partial w(\textbf{\phi})} {\partial \phi_k}} + \Psi_k (T,\mu) {\frac {\partial h_k(\textbf{\phi})} {\partial \phi_k}} \right]
+&{\tau}{\epsilon}{\frac {\partial \phi_i} {\partial t}} - v{\frac {\partial \phi_i} {\partial x}} = -{\frac {2} {3}} \left[-2{\gamma}{\epsilon}{\nabla}^2 {\phi_i} + {\frac {1} {\epsilon}}{\frac {\partial w({\Phi})} {\partial \phi_i}} + \Psi_i (T,\mu) {\frac {\partial h_i({\Phi})} {\partial \phi_i}} \right] \\
+&+ {\frac {1} {3}} \left[-2{\gamma}{\epsilon}{\nabla}^2 {\phi_j} + {\frac {1} {\epsilon}}{\frac {\partial w({\Phi})} {\partial \phi_j}} + \Psi_j (T,\mu) {\frac {\partial h_j({\Phi})} {\partial \phi_j}} \right] \\
+&+ {\frac {1} {3}} \left[-2{\gamma}{\epsilon}{\nabla}^2 {\phi_k} + {\frac {1} {\epsilon}}{\frac {\partial w({\Phi})} {\partial \phi_k}} + \Psi_k (T,\mu) {\frac {\partial h_k({\Phi})} {\partial \phi_k}} \right]
 \end{aligned}                    
 \tag{15}
 \label{15}
@@ -180,7 +180,7 @@ and the chemical diffusion evolution equation becomes:
 
 $$
 \begin{aligned}
-&\left[\sum_i {\frac {\partial c_i} {\partial \mu}} h_i(\textbf{\phi})\right]{\frac {\partial \mu} {\partial t}} - v{\frac {\partial c} {\partial x}} + \sum_i c_i \left(\sum_n {\frac {\partial h_i} {\partial \phi_n}} {\frac {\partial \phi_n} {\partial t}} \right) \\
+&\left[\sum_i {\frac {\partial c_i} {\partial \mu}} h_i({\Phi})\right]{\frac {\partial \mu} {\partial t}} - v{\frac {\partial c} {\partial x}} + \sum_i c_i \left(\sum_n {\frac {\partial h_i} {\partial \phi_n}} {\frac {\partial \phi_n} {\partial t}} \right) \\
 &= \nabla \cdot \left(D \phi_{liq} {\frac {\partial c_{liq} (T,\mu)} {\partial \mu}} \nabla \mu \right) - \nabla \cdot j_{at}
 \end{aligned}
 \tag{16}
@@ -188,7 +188,7 @@ $$
 $$
 Since each of the fields is being moved in the direction opposite to growth direction, the temperature gradient is kept stationary and solid-liquid interface is expected to find its equilibrium undercooling.
 
-* Using the relation ${\frac {\partial \Psi (T,\mu,\textbf{\phi})} {\partial \mu}} = -c$ and equations (6--9), $\nabla c$ is evaluated.
+* Using the relation ${\frac {\partial \Psi (T,\mu,{\Phi})} {\partial \mu}} = -c$ and equations (6--9), $\nabla c$ is evaluated.
 
 ***Boundary conditions***
 
@@ -196,9 +196,9 @@ Since each of the fields is being moved in the direction opposite to growth dire
 
 ***Initial conditions***
 
-* $\phi_i = 1.0$ inside the phase $i$ and 0 inside phases $j$ and $k$ (with $i, j, k ~\epsilon ~\{\alpha, \beta, liq\}$) (see Figure 1).
+* $\phi_i =$ 1.0 inside the phase $i$ and 0 inside phases $j$ and $k$ (with $i, j, k ~\epsilon ~\{\alpha, \beta, liq\}$) (see Figure 1).
 
-* $\mu = 1.0$ in the entire domain.
+* $\mu =$ 1.0 in the entire domain.
 
 ***Physical properties*** The nondimensionalized physical properties are:
 
@@ -292,7 +292,7 @@ cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/eutecticGrowth2D/0/mu.or
 
 ### Setting initial field
 
-A non-uniform initial condition is specified for the phase parameter, $\phi_i$, where $\phi_i = 1.0$ inside the phase $i$ and 0 inside phases $j$ and $k$ (with $i, j, k ~\epsilon ~\{\alpha, \beta, liq\}$). And for chemical potential, $\mu$, where $\mu = 1.0$ in the entire domain.
+A non-uniform initial condition is specified for the phase parameter, $\phi_i$, where $\phi_i =$ 1.0 inside the phase $i$ and 0 inside phases $j$ and $k$ (with $i, j, k ~\epsilon ~\{\alpha, \beta, liq\}$). And for chemical potential, $\mu$, where $\mu =$ 1.0 in the entire domain.
 
 This is achieved by running the setFields utility. It requires a *setFieldsDict* dictionary, located in the *system* directory, whose entries for this case are shown below:
 
@@ -396,8 +396,8 @@ The second case is performed by subjecting the melt to a positive thermal gradie
 
 $$
 T(x,t) = T_{initial} + G(x-vt)
-\tag{16}
-\label{16}
+\tag{167}
+\label{167}
 $$
 
 ## Problem specification
@@ -443,7 +443,7 @@ cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/eutecticGrowth2D/system/
 Similar to section 1.2.2, the file *phi.orig* in *0* sub-directory of the *directionalSolidification* directory can be examined:
 
 ```{r comment='', echo=FALSE}
-cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/eutecticGrowth2D/0/phi.orig'), sep = '\n')
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/eutecticGrowth2D/0/phi_alpha.orig'), sep = '\n')
 ```
 
 For this case, the boundary consists of symmetryPlane, only for patch named floor for the bottom symmetric boundary. The remaining planes of the 2D case are given a zeroGradient boundary condition.
