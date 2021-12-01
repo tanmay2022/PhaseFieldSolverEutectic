@@ -8,13 +8,13 @@ application=`getApplication`
 
 runApplication blockMesh
 
-cp 0/phi.orig 0/phi_alpha
+cp 0/phi_alpha.orig 0/phi_alpha
 
-cp 0/phi.orig 0/phi_beta
+cp 0/phi_beta.orig 0/phi_beta
 
-cp 0/phi.orig 0/phi_liq
+cp 0/phi_liq.orig 0/phi_liq
 
-cp 0/phi.orig 0/T
+cp 0/T.orig 0/T
 
 cp 0/mu.orig 0/mu
 

@@ -60,5 +60,9 @@ SIMPLE
     nNonOrthogonalCorrectors 0;
 }
 
+Tol_is_defined_here
+{
+    Tol 1.0; //get_tol_from_this
+}
 
 // ************************************************************************* //

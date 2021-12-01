@@ -12,14 +12,14 @@ It contains the source files of the solver.
 
 It contains the R Markdown files for creating the HTML (userGuide.html) and PDF (userGuide.pdf) documentations of the OpenFOAM cases.
 
-## eutecticGrowth2D
+## lamellar2D
 
-It contains the OpenFOAM case files required to run the 2D eutectic growth problem.
+It contains the OpenFOAM case files required to run the 2D lamellar eutectic growth problem.
 
-## lamelar3D
+## lamellar3D
 
-It contains the OpenFOAM case files required to run the 3D lamelar microstructure problem.
+It contains the OpenFOAM case files required to run the 3D lamellar eutectic growth problem.
 
 ## rod3D
 
-It contains the OpenFOAM case files required to run the 3D rod microstructure problem.
+It contains the OpenFOAM case files required to run the 3D rod eutectic growth problem.

@@ -30,7 +30,7 @@ regions
 	
 	boxToCell	// boxToCell: work on all cells in a rectangular box defined with starting and end point coordinates
 	{
-	box (0 0 -0.12) (500 24000 0.12);	// Box can be larger than domain; in general this avoids edge effects
+	box (0 0 0) (120 75 100);	// Box can be larger than domain; in general this avoids edge effects
 	fieldValues					// NB: no semicolons at the end of the dictionary entries below!
 	(
 	volScalarFieldValue phi_alpha 1.0
@@ -44,7 +44,7 @@ regions
 
 	boxToCell	// boxToCell: work on all cells in a rectangular box defined with starting and end point coordinates
 	{
-	box (0 0 -0.12) (500 24000 0.12);	// Box can be larger than domain; in general this avoids edge effects
+	box (0 75 0) (120 150 100);	// Box can be larger than domain; in general this avoids edge effects
 	fieldValues					// NB: no semicolons at the end of the dictionary entries below!
 	(
 	volScalarFieldValue phi_alpha 0.0
@@ -58,7 +58,7 @@ regions
 
 	boxToCell	// boxToCell: work on all cells in a rectangular box defined with starting and end point coordinates
 	{
-	box (0 0 -0.12) (500 24000 0.12);	// Box can be larger than domain; in general this avoids edge effects
+	box (120 0 0) (300 150 100);	// Box can be larger than domain; in general this avoids edge effects
 	fieldValues					// NB: no semicolons at the end of the dictionary entries below!
 	(
 	volScalarFieldValue phi_alpha 0.0
