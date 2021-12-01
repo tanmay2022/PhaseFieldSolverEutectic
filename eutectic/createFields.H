@@ -1,4 +1,4 @@
-
+//! Creating phase-fields with the option to write
  volScalarField phi_alpha
   (
       IOobject
@@ -35,7 +35,7 @@ volScalarField phi_liq
       ),
       mesh
   );
-
+//! Creating temperature field with the option to write
 volScalarField T
     (
         IOobject
@@ -48,7 +48,7 @@ volScalarField T
         ),
         mesh
     );
-
+//! Creating chemical potential field with the option to write
   volScalarField mu
   (
       IOobject

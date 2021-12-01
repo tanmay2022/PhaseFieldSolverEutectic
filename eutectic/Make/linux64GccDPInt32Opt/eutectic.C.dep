@@ -1,5 +1,5 @@
-$(OBJECTS_DIR)/phasefieldeut.C.dep: \
-phasefieldeut.C \
+$(OBJECTS_DIR)/eutectic.C.dep: \
+eutectic.C \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/fvCFD.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/fvOptions.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/simpleControl.H \
@@ -8,7 +8,8 @@ $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/setRootCase.H \
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/createTime.H \
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/createMesh.H \
 createFields.H \
-phi_abl.H \
+createTol.H \
+phi_abl_antiT.H \
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/parRun.H \
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/Time.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/fvMesh.H \
@@ -767,7 +768,8 @@ $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/setRootCase.H :
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/createTime.H :
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/createMesh.H :
 createFields.H :
-phi_abl.H :
+createTol.H :
+phi_abl_antiT.H :
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/parRun.H :
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/Time.H :
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/fvMesh.H :

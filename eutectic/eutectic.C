@@ -54,8 +54,9 @@ int main(int argc, char *argv[])
     //volScalarField D_beta = 0.0*mu;
     int iter_num = 0;
     
-    T = G*( (1/dimx)* mesh.C().component(vector::X)) + initial;// - v*runTime.value()) + initial;
-    //T = T_eut;d
+    //! The imposed temperature field as a function of thermal gradient
+    //! in the x direction, G
+    T = G*( (1/dimx)* mesh.C().component(vector::X)) + initial;
 
     //free energy parameters
 
@@ -67,24 +68,23 @@ int main(int argc, char *argv[])
     volScalarField D_beta =  A*(- c_eq_liq + c_eq_beta )*(c_eq_liq + c_eq_beta  + 2.0*(T - T_eut)/ms_beta );
     volScalarField D_liq  ("D_liq", 0.*mu);
 
-    //dimensionedScalar tau_alpha_beta = epsilon * (- c_eq_beta + c_eq_alpha) * (- c_eq_beta + c_eq_alpha) * 0.2 / (  D * 1/(2*A)    );
-    //dimensionedScalar tau_alpha_liq = epsilon * (- c_eq_liq + c_eq_alpha) * (- c_eq_liq + c_eq_alpha) * 0.2 / (  D * 1/(2*A)    );
-    //dimensionedScalar tau_beta_liq = epsilon * (- c_eq_beta + c_eq_liq) * (- c_eq_beta + c_eq_liq) * 0.2 / (  D * 1/(2*A)    );
-    
-    
-            
+
+
 while (runTime.loop())
     {
         Info<< "Time = " << runTime.timeName() << nl << endl;
                
           while (simple.correctNonOrthogonal())
         {
+            //! Initial tolerance to check convergence
             #include "createTol.H"
+            //! Solving the phase-field and chemical potential equations
             #include "phi_abl_antiT.H"
             
         }
 
 
+        //! Writing the results according to keywords in controlDict
         Info<< "ExecutionTime = " << runTime.elapsedCpuTime() << " s"
             << "  ClockTime = " << runTime.elapsedClockTime() << " s"
             << nl << endl;

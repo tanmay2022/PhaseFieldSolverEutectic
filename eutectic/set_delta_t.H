@@ -29,7 +29,9 @@ Description
     Reduction of time-step is immediate but increase is damped to avoid
     unstable oscillations.
 
+
 \*---------------------------------------------------------------------------*/
+//! Timestep reduction for improving convergence.
 
 dimensionedScalar maxResidual = 1e-7;
 dimensionedScalar maxDeltaT   = 1;

@@ -3,6 +3,9 @@ dimensionedScalar initial_residual_alpha ;
 dimensionedScalar initial_residual_beta ;
 dimensionedScalar initial_residual_liq;
 scalar counter= 0;
+//! Implicit discretization using fvm class for time derivative and laplacian.
+//! Explicit discretization using fvc class for gradient and divergence.
+//! Phase-field equations with approximate relation between c, mu and T according to the parabolic approximation for free energy
 do{
     volVectorField grad_alpha =dimx*fvc::grad(phi_alpha);
     volVectorField grad_beta  =dimx*fvc::grad(phi_beta);
@@ -238,7 +241,7 @@ do{
 //Info<< "Tol value = " << Tol <<  endl;
 Info<< "counter =" << counter <<  endl;
 
-
+//! Timestep reduction for improving convergence.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 iter_num += 1;
 
@@ -271,6 +274,7 @@ runTime.setDeltaT
 
 Info<< "iter_num = " <<  iter_num << endl;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//! Gradient term associated with advection in chemical potential equation
 volVectorField grad_c =dimx*fvc::grad( ((mu - B_alpha)/(2*A))*
                                                     (
                                                       0.25*phi_alpha*phi_alpha*
@@ -301,10 +305,12 @@ volVectorField grad_c =dimx*fvc::grad( ((mu - B_alpha)/(2*A))*
 
 
                                                 ));
+//! The unit normal vectors to the interfaces with a small number in denominator to prevent solution from diverging
 volVectorField n_alpha = -1*dimx*fvc::grad(phi_alpha)/(1E-20+mag(dimx*fvc::grad(phi_alpha)));
 volVectorField n_beta  = -1*dimx*fvc::grad(phi_beta) /(1E-20+mag(dimx*fvc::grad(phi_beta)));
 volVectorField n_liq   = -1*dimx*fvc::grad(phi_liq)  /(1E-20+mag(dimx*fvc::grad(phi_liq)));
 
+//! Chemical potential equation with approximation according to the parabolic form of free energy
 fvScalarMatrix muEqn
 (
          (0.5* 1.0/A* (
