@@ -22,12 +22,12 @@ ms_beta     ms_beta [0 0 0 0 0 0 0] 0.5; //Slope liq-beta and beta-liq
 c_eq_liq    c_eq_liq [0 0 0 0 0 0 0] 0.5; //Eutectic composition of liquid phase
 c_eq_alpha  c_eq_alpha [0 0 0 0 0 0 0] 0.2; //Eutectic composition of alpha phase
 c_eq_beta   c_eq_beta [0 0 0 0 0 0 0] 0.8; //Eutectic composition of beta phase
-G           G [0 0 0 0 0 0 0] 1.0e-3; //Thermal gradient
+G           G [0 0 0 0 0 0 0] 1.7e-5; //Thermal gradient
 v           v [0 0 0 0 0 0 0] 0.001; //Velocity
 A           A [0 0 0 0 0 0 0] 1.0;
 D           D [0 0 0 0 0 0 0] 1.0; //Diffusivity in liquid
 T_eut       T_eut [0 0 0 0 0 0 0] 1.0; //Eutectic temperature
-initial     initial [0 0 0 0 0 0 0] 0.89; //Constant value from temperature profile
+initial     initial [0 0 0 0 0 0 0] 0.93; //Constant value from temperature profile
 tau         tau [0 0 0 0 0 0 0] 0.144; //Relaxation coefficient
 gamma       gamma [0 0 0 0 0 0 0] 1.0; //Interface energy parameter
 epsilon     epsilon [0 0 0 0 0 0 0] 4.0; //Interface width parameter

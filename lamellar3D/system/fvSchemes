@@ -11,39 +11,40 @@ FoamFile
     format      ascii;
     class       dictionary;
     location    "system";
-    object      controlDict;
+    object      fvSchemes;
 }
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     eutectic;
+ddtSchemes
+{
+    default         Euler;
+}
 
-startFrom       startTime; //latestTime
+gradSchemes
+{
+    default         Gauss linear;
+    grad(phi)         Gauss linear;
+}
 
-startTime       0; // the actual time i.e. runtime.value() or no. of iterations*deltaT
+divSchemes
+{
+    default         Gauss linear;
+}
 
-stopAt          endTime;
+laplacianSchemes
+{
+    default         Gauss linear corrected;
+}
 
-endTime         1000.00; //actual time = total_iterations*deltaT
+interpolationSchemes
+{
+    default         linear;
+}
 
-deltaT          0.05;
-
-writeControl    runTime;
-
-writeInterval   50.00;
-
-purgeWrite      0;
-
-writeFormat     ascii;
-
-writePrecision  6;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable true;
+snGradSchemes
+{
+    default         corrected;
+}
 
 
 // ************************************************************************* //

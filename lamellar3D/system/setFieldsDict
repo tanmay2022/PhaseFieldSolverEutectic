@@ -20,7 +20,7 @@ defaultFieldValues
 	volScalarFieldValue phi_alpha 0.0
 	volScalarFieldValue phi_beta 0.0
 	volScalarFieldValue phi_liq 0.0
-	volScalarFieldValue T 1.0
+	volScalarFieldValue T 0.93
 	volScalarFieldValue mu 1.0
 
 );
@@ -30,13 +30,13 @@ regions
 	
 	boxToCell	// boxToCell: work on all cells in a rectangular box defined with starting and end point coordinates
 	{
-	box (-6 -6 -6) (120 75 100);	// Box can be larger than domain; in general this avoids edge effects
+	box (-6 -6 -6) (64 166 166);	// Box can be larger than domain; in general this avoids edge effects
 	fieldValues					// NB: no semicolons at the end of the dictionary entries below!
 	(
 	volScalarFieldValue phi_alpha 1.0
 	volScalarFieldValue phi_beta 0.0
 	volScalarFieldValue phi_liq 0.0
-	volScalarFieldValue T 1.0
+	volScalarFieldValue T 0.93
 	volScalarFieldValue mu 1.0
 	);
 	}
@@ -44,13 +44,13 @@ regions
 
 	boxToCell	// boxToCell: work on all cells in a rectangular box defined with starting and end point coordinates
 	{
-	box (-6 75 -6) (120 156 100);	// Box can be larger than domain; in general this avoids edge effects
+	box (-6 75 0) (64 150 100);	// Box can be larger than domain; in general this avoids edge effects
 	fieldValues					// NB: no semicolons at the end of the dictionary entries below!
 	(
 	volScalarFieldValue phi_alpha 0.0
 	volScalarFieldValue phi_beta 1.0
 	volScalarFieldValue phi_liq 0.0
-	volScalarFieldValue T 1.0
+	volScalarFieldValue T 0.93
 	volScalarFieldValue mu 1.0
 	);
 	}
@@ -58,13 +58,13 @@ regions
 
 	boxToCell	// boxToCell: work on all cells in a rectangular box defined with starting and end point coordinates
 	{
-	box (120 -6 -6) (306 156 100);	// Box can be larger than domain; in general this avoids edge effects
+	box (64 -6 -6) (166 166 166);	// Box can be larger than domain; in general this avoids edge effects
 	fieldValues					// NB: no semicolons at the end of the dictionary entries below!
 	(
 	volScalarFieldValue phi_alpha 0.0
 	volScalarFieldValue phi_beta 0.0
 	volScalarFieldValue phi_liq 1.0
-	volScalarFieldValue T 1.0
+	volScalarFieldValue T 0.93
 	volScalarFieldValue mu 1.0
 	);
 	}
