@@ -200,7 +200,7 @@ Since each of the fields is being moved in the direction opposite to growth dire
 
 * $\mu =$ 1.0 in the entire domain.
 
-***Physical properties*** The nondimensionalized physical properties are:
+***Physical properties*** The nondimensionalized physical properties for equal volume fractions of $\alpha$ and $\beta$ phases are:
 
 * Slope liquidus of $liq-\alpha$ ($m_{liq-\alpha}$) = Slope solidus of $\alpha-liq$ ($m_{\alpha-liq}$) = -0.5
 
@@ -396,7 +396,13 @@ As can be seen from the figures, in absence of thermal gradient, the solidificat
 knitr::include_graphics('freeGrowth2500000c.png')
 ```
 
-# Directional solidification
+# 3D lamellar eutectic growth
+
+Lamellar morphology with equal volume fractions of $\alpha$ and $\beta$ phases
+
+# 3D rod eutectic growth
+
+Rod morphology with volume fractions of 70\% $\alpha$ and 30\% $\beta$ phase
 
 The second case is performed by subjecting the melt to a positive thermal gradient ahead of the solid-liquid interface. The imposed temperature field as a function of thermal gradient in the x direction, $G$ and pulling velocity, $v$ is taken as:
 

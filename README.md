@@ -18,8 +18,8 @@ It contains the OpenFOAM case files required to run the 2D lamellar eutectic gro
 
 ## lamellar3D
 
-It contains the OpenFOAM case files required to run the 3D lamellar eutectic growth problem.
+It contains the OpenFOAM case files required to run the eutectic growth problem of 3D lamellar morphology.
 
 ## rod3D
 
-It contains the OpenFOAM case files required to run the 3D rod eutectic growth problem.
+It contains the OpenFOAM case files required to run the eutectic growth problem of 3D rod morphology.
