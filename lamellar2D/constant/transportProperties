@@ -28,7 +28,7 @@ A           A [0 0 0 0 0 0 0] 1.0;
 D           D [0 0 0 0 0 0 0] 1.0; //Diffusivity in liquid
 T_eut       T_eut [0 0 0 0 0 0 0] 1.0; //Eutectic temperature
 initial     initial [0 0 0 0 0 0 0] 0.89; //Constant value from temperature profile
-tau         tau [0 0 0 0 0 0 0] 0.144; //Relaxation coefficient
+tau         tau [0 0 0 0 0 0 0] 0.288; //Relaxation coefficient
 gamma       gamma [0 0 0 0 0 0 0] 1.0; //Interface energy parameter
-epsilon     epsilon [0 0 0 0 0 0 0] 4.0; //Interface width parameter
+epsilon     epsilon [0 0 0 0 0 0 0] 8.0; //Interface width parameter
 // ************************************************************************* //

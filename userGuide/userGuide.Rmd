@@ -37,7 +37,7 @@ The problem is defined as follows:
 
 ***Solution domain*** The domain is considered to be two-dimensional in this problem. The rectangular domain consists of three phases with boundaries as shown in Figure 1 (@Umate).
 
-```{r geomfg, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 1: Geometry of the melt with an undercooled region."}
+```{r geoml2, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 1: Two-dimensional geometry of the lamellar morphology."}
 knitr::include_graphics('geom2d.png')
 ```
 
@@ -208,9 +208,9 @@ Since each of the fields is being moved in the direction opposite to growth dire
 
 * Eutectic composition of liquid phase ($c^{eut}_{liq}$) = 0.5
 
-* Eutectic composition of $\alpha$ phase ($c^{\alpha}$) = 0.2
+* Eutectic composition of $\alpha$ phase ($c^{eut}_{\alpha}$) = 0.2
 
-* Eutectic composition of $\beta$ phase ($c^{\beta}$) = 0.8
+* Eutectic composition of $\beta$ phase ($c^{eut}_{\beta}$) = 0.8
 
 * Thermal gradient ($G$) = 1.7e-5
 
@@ -222,11 +222,11 @@ Since each of the fields is being moved in the direction opposite to growth dire
 
 * Constant value from temperature profile ($T_{initial}$) = 0.93
 
-* Relaxation coefficient ($\tau$) = 0.144
+* Relaxation coefficient ($\tau$) = 0.288
 
 * Interface energy parameter ($\gamma$) = 1
 
-* Interface width parameter ($\epsilon$) = 4
+* Interface width parameter ($\epsilon$) = 8
 
 ***Solver name***
 
@@ -246,7 +246,7 @@ cd \$FOAM_RUN/PhaseFieldSolverEutectic/lamellar2D
 
 ### Mesh generation
 
-OpenFOAM solves the case in three dimensions by default but can be instructed to solve in two dimensions. Here, the mesh must be 1 cell layer thick. The domain consists of a rectangle of length in the growth direction (x), 3$D/v$ and in the normal direction (y), 1.5$D/v$. The solid-liquid interface is set at 1.2$D/v$ from the origin. A domain of size 300 in the growth direction, if resolved in 300 grid points, is said to have a dx of 1. Large variations in fields can be expected near the interfaces, so the mesh will be graded to be smaller in this region. The block structure is shown in Figure 2.
+OpenFOAM solves the case in three dimensions by default but can be instructed to solve in two dimensions. Here, the mesh must be 1 cell layer thick. The domain consists of a rectangle of length in the growth direction (x), 3$D/v$ and in the normal direction (y), 1.6$D/v$. A domain of size 300 in the growth direction, if resolved in 150 grid points, is said to have a dx of 2. The . Large variations in fields can be expected near the interfaces, so the mesh will be graded to be smaller in this region. The graded mesh is achieved by merging three blocks with different refinement. The block structure is shown in Figure 2.
 
 ```{r geomblock, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 2: Block structure of the mesh."}
 knitr::include_graphics('geomblock.png')
@@ -280,7 +280,7 @@ Once the mesh generation is complete, the user can look at this initial conditio
 cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar2D/0/phi_alpha.orig'), sep = '\n')
 ```
 
-For this case, the boundary consists of planes split into patches named: (1) floor and ceiling for cyclic boundary at top and bottom planes; (2) sideSolid patch includes other planes of the 2D case and is given a zeroGradient boundary condition for $\phi_alpha$, meaning “the normal gradient of $\phi_{\alpha}$ is zero”. The initial fields are set to uniform zero.
+For this case, the boundary consists of planes split into patches named: (1) ceiling and floor for cyclic boundary at top and bottom planes; (2) sideSolid patch includes other planes of the 2D case and is given a zeroGradient boundary condition for $\phi_{\alpha}$, meaning “the normal gradient of $\phi_{\alpha}$ is zero”. The initial fields are set to uniform zero.
 
 The user can similarly examine *0/phi_beta.orig*, *0/phi_liq.orig*, and the chemical potential field in the *0/mu.orig* file. The non-dimensionalized internal field is initialised as uniform zero. The boundary fields require the same boundary condition.
 
@@ -298,7 +298,7 @@ cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar2D/0/mu.orig'), 
 
 ### Setting initial field
 
-A non-uniform initial condition is specified for the phase parameter, $\phi_i$, where $\phi_i =$ 1.0 inside the phase $i$ and 0 inside phases $j$ and $k$ (with $i, j, k ~\epsilon ~\{\alpha, \beta, liq\}$). And for chemical potential, $\mu$, where $\mu =$ 1.0 in the entire domain.
+A non-uniform initial condition is specified for the phase parameter, $\phi_i$, where $\phi_i =$ 1.0 inside the phase $i$ and 0 inside phases $j$ and $k$ (with $i, j, k ~\epsilon ~\{\alpha, \beta, liq\}$). For chemical potential, $\mu =$ 1.0 in the entire domain. The solid-liquid interface is set at 1.2$D/v$ from the origin.
 
 This is achieved by running the setFields utility. It requires a *setFieldsDict* dictionary, located in the *system* directory, whose entries for this case are shown below:
 
@@ -324,11 +324,11 @@ Input data relating to the control of time, reading and writing of the solution 
 
 The run is started at time $t =$ 0 to read field data from a directory named *0*. Therefore, the startFrom keyword is set to startTime and then the startTime keyword to be 0.
 
-The end time can be considered to be the time taken for steady state diffusion of each phase, which is found to be 60 for this case. To specify this end time, the stopAt keyword is set to endTime and then the endTime keyword to 60.
+The end time can be considered to be the time taken for steady-state diffusion of each phase, which is found to be 1000 for this case. To specify this end time, the stopAt keyword is set to endTime and then the endTime keyword to 1000.
 
-Next, the time step must be fixed which is represented by the keyword deltaT. To achieve temporal accuracy and numerical stability while reducing computational effort, deltaT is set to 0.05.
+Next, the time step must be fixed which is represented by the keyword deltaT. To achieve temporal accuracy and numerical stability while reducing computational effort, deltaT is set to 0.1.
 
-As the simulation progresses, results written at certain intervals of time can later be viewed with a post-processing package. The writeControl keyword can be set to the runTime option, where the time interval for writing is specified under the writeInterval keyword. The writeInterval can be set to 5. OpenFOAM creates a new directory named after the current time, e.g. 10, on each occasion that it writes a set of data containing the results for each field, $\phi_i$ and $\mu$, into the time directories. For this case, the entries in the *controlDict* are shown below:
+As the simulation progresses, results written at certain intervals of time can later be viewed with a post-processing package. The writeControl keyword can be set to the runTime option, where the time interval for writing is specified under the writeInterval keyword. The writeInterval can be set to 100. OpenFOAM creates a new directory named after the current time, e.g. 200, on each occasion that it writes a set of data containing the results for each field, $\phi_i$ and $\mu$, into the time directories. For this case, the entries in the *controlDict* are shown below:
 
 
 ```{r comment='', echo=FALSE}
@@ -352,7 +352,7 @@ In the *fvSolution*, the solver tolerance should be set to 10$^{-6}$ for this ca
 ```{r comment='', echo=FALSE}
 cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar2D/system/fvSolution'), sep = '\n')
 ```
-The *fvSolution* dictionary contains sub-dictionaries: SIMPLE that contains a control parameter nNonOrthogonalCorrectors set to 0, and Tol_is_defined_here that contains a control parameter Tol set to 1 (which is read by *createTol.H*). The description of other options can be found in the OpenFOAM userguide.
+The *fvSolution* dictionary contains sub-dictionaries: SIMPLE that contains a control parameter nNonOrthogonalCorrectors set to 0, and Tol_is_defined_here that contains a control parameter Tol set to 1e-6 (which is read by *createTol.H*). The description of other options can be found in the OpenFOAM userguide.
 
 ## Running the application
 
@@ -376,41 +376,158 @@ touch lamellar2D.foam
 
 paraview lamellar2D.foam
 
-The evolution of phase-field profile corresponding to three time steps are shown in Figure 4--6.
+The phase-fields at steady-state for equal volume fractions of $\alpha$ and $\beta$ phases are shown in Figure 4--6. These are corresponding to the time, when the temperature becomes constant at a particular value despite being different during initialization.
 
-```{r first, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 4: Phase-field profile at time 100000."}
+```{r first, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 4: Variation of $\alpha$ phase-field at steady-state."}
 knitr::include_graphics('freeGrowth100000.png')
 ```
 
-```{r second, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 5: Phase-field profile at time 1000000."}
+```{r second, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 5: Variation of $\beta$ phase-field at steady-state."}
 knitr::include_graphics('freeGrowth1000000.png')
 ```
 
-```{r third, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 6: Phase-field profile at time 2500000."}
+```{r third, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 6: Variation of liquid phase-field at steady-state."}
 knitr::include_graphics('freeGrowth2500000.png')
 ```
 
-As can be seen from the figures, in absence of thermal gradient, the solidification happens in the form of freely growing dendrites (@Choudhury). Also, the chemical potential plot at time 2500000 is shown in Figure 7.
+An interesting result is observed, when the simulation is run by changing the equilibrium compositions to $c^{eut}_{\alpha} =$ 0.41 and $c^{eut}_{\beta} =$ 0.71 for 70\% $\alpha$ and 30\% $\beta$ phase. At steady-state, the volume fractions become 70\% $\alpha$ and 30\% $\beta$ despite starting off with equal volume fractions of $\alpha$ and $\beta$, which is shown in Figure 7.
 
-```{r fourth, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 7: Chemical potential at time 2500000."}
+```{r fourth, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 7: Variation of $\alpha$ phase-field at steady-state for equilibrium compositions of 70\% $\alpha$ and 30\% $\beta$ phase."}
 knitr::include_graphics('freeGrowth2500000c.png')
 ```
 
 # 3D lamellar eutectic growth
 
-Lamellar morphology with equal volume fractions of $\alpha$ and $\beta$ phases
+This case corresponds to 3D lamellar morphology with equal volume fractions of $\alpha$ and $\beta$ phases initialized randomly in the plane perpendicular to the growth direction.
+
+## Problem specification
+
+***Solution domain*** The domain is considered to be three-dimensional in this problem. The cubic domain consists of three phases with random $\alpha$ and $\beta$ phase distribution perpendicular to the growth direction as shown in Figure 8.
+
+```{r geoml3, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 8: Three-dimensional geometry of the lamellar morphology."}
+knitr::include_graphics('geoml3.png')
+```
+
+***Governing equations*** The governing equations used are same as in section 1.1.
+
+***Boundary conditions*** Cyclic boundary condition is specified at the top, bottom, front and back planes, and zero-flux is specified at the remaining planes.
+
+***Initial conditions*** The initial conditions are same as in section 1.1.
+
+***Physical properties*** The physical properties are same as in section 1.1.
+
+***Solver name*** *eutectic*.
+
+***Case name*** *lamellar3D*, located in the *\$FOAM_RUN/PhaseFieldSolverEutectic* directory.
+
+## Pre-processing
+
+To prepare case files and running the case, the user can change to the case directory:
+
+cd \$FOAM_RUN/PhaseFieldSolverEutectic/lamellar3D
+
+### Mesh generation
+
+A domain of size 160$\times$160$\times$160 with dx of 2 is considered. Similar to section 1.2.1, the graded mesh is obtained by merging three blocks with different refinement.
+
+The entries in *blockMeshDict* located in the *system* directory for this case are as follows:
+
+```{r comment='', echo=FALSE}
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/system/blockMeshDict'), sep = '\n')
+```
+
+The generated 3D mesh is shown in Figure 9.
+
+```{r blocklam, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 9: Generated 3D mesh for lamellar case."}
+knitr::include_graphics('blocklam.png')
+```
+
+### Boundary and initial conditions
+
+Similar to section 1.2.2, the *0* sub-directory contains *phi_alpha.orig*, *phi_beta.orig*, *phi_liq.orig*, and *mu.orig*. For this case, the boundary consists of planes split into patches named: (1) ceiling, floor, front and back for cyclic boundary at top, bottom, front and back planes, respectively; (2) sideSolid patch includes other planes of the 3D case and is given a zeroGradient boundary condition.
+
+```{r comment='', echo=FALSE}
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/0/phi_alpha.orig'), sep = '\n')
+```
+
+```{r comment='', echo=FALSE}
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/0/phi_beta.orig'), sep = '\n')
+```
+
+```{r comment='', echo=FALSE}
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/0/phi_liq.orig'), sep = '\n')
+```
+
+```{r comment='', echo=FALSE}
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/0/mu.orig'), sep = '\n')
+```
+
+### Setting initial field
+
+
+
+A non-uniform initial condition is specified for the phase parameter, $\phi_i$, where $\phi_i =$ 1.0 inside the phase $i$ and 0 inside phases $j$ and $k$ (with $i, j, k ~\epsilon ~\{\alpha, \beta, liq\}$). And for chemical potential, $\mu$, where $\mu =$ 1.0 in the entire domain. The solid-liquid interface is set at 1.2$D/v$ from the origin.
+
+This is achieved by running the setFields utility. It requires a *setFieldsDict* dictionary, located in the *system* directory, whose entries for this case are shown below:
+
+```{r comment='', echo=FALSE}
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/system/setFieldsDict'), sep = '\n')
+
+
+
+The entries of *setFieldsDict* dictionary for this case are kept same as section 1.2.3.
+
+### Physical properties
+
+The entries of *transportProperties* dictionary for this case are kept same as section 1.2.4.
+
+### Time step control
+
+Similar to section 1.2.5, the startTime and deltaT are specified. The endTime keyword is set to 6000000 to observe the growth of secondary dendrites from the primary dendrite, growing normal to the direction of imposed thermal gradient. The writeInterval can be set to 200000. For this case, the entries in the *controlDict* are shown below:
+
+```{r comment='', echo=FALSE}
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/system/controlDict'), sep = '\n')
+```
+
+### Discretisation schemes and solver settings
+
+The *fvSchemes* and *fvSolution* dictionary entries are kept same as section 1.2.6 and 1.2.7.
+
+## Running the case
+
+For this case, the primary dendrite can be expected to grow in the y direction since the thermal gradient is applied in the x direction. Consequently, the secondary dendrites will grow almost uniformly in the x direction (as will be seen later in section 2.5). In order to balance the load between the processors, in the presence of dynamic interface refinement and without stopping the run unlike section 1.3, the subdomains are divided in the y direction. Hence, numberOfSubdomains = 4 and n = (1, 4, 1) are set.
+
+```{r comment='', echo=FALSE}
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/system/decomposeParDict'), sep = '\n')
+```
+
+Similar to section 1.3, the solver for this case is run parallely using runParallel within *Allrun*.
+
+## Post-processing
+
+Similar to section 1.4, the results reconstructed to time directories can be viewed by creating and opening the *directionalSolidification.foam* case module using ParaView. The evolution of phase-field profile corresponding to three time steps are shown in Figure 9--11.
+
+```{r firstb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 9: Phase-field profile at time 200000."}
+knitr::include_graphics('directionalsolidification200000.png')
+```
+
+```{r secondb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 10: Phase-field profile at time 800000."}
+knitr::include_graphics('directionalsolidification800000.png')
+```
+
+```{r thirdb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 11: Phase-field profile at time 3600000."}
+knitr::include_graphics('directionalsolidification3600000.png')
+```
+
+As can be seen from the figures, in the presence of thermal gradient and velocity in the x direction, the primary dendrite grows in the y direction. Later, secondary dendrites start to grow from the primary dendrite unlike the *freeGrowth* case in section 1.4. Also, the chemical potential plot at time 3600000 is shown in Figure 12.
+
+```{r fourthb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 12: Chemical potential at time 3600000."}
+knitr::include_graphics('directionalsolidification3600000c.png')
+```
 
 # 3D rod eutectic growth
 
 Rod morphology with volume fractions of 70\% $\alpha$ and 30\% $\beta$ phase
-
-The second case is performed by subjecting the melt to a positive thermal gradient ahead of the solid-liquid interface. The imposed temperature field as a function of thermal gradient in the x direction, $G$ and pulling velocity, $v$ is taken as:
-
-$$
-T(x,t) = T_{initial} + G(x-vt)
-\tag{167}
-\label{167}
-$$
 
 ## Problem specification
 
@@ -447,7 +564,7 @@ cd \$FOAM_RUN/PhaseFieldSolverDynamic/directionalSolidification
 The overall process of generating the mesh remains same as in section 1.2.1. However, this case is a symmetric problem. So, only the top half of the whole geometry (shown in Figure 8) is considered. Similarly, graded mesh of 250 by 250 cells (with smaller cells near the left and bottom boundaries) will be used. The entries in *blockMeshDict* located in the *system* directory for this case are as follows:
 
 ```{r comment='', echo=FALSE}
-cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar2D/system/blockMeshDict'), sep = '\n')
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/system/blockMeshDict'), sep = '\n')
 ```
 
 ### Boundary and initial conditions
@@ -455,7 +572,7 @@ cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar2D/system/blockM
 Similar to section 1.2.2, the file *phi.orig* in *0* sub-directory of the *directionalSolidification* directory can be examined:
 
 ```{r comment='', echo=FALSE}
-cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar2D/0/phi_alpha.orig'), sep = '\n')
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/0/phi_alpha.orig'), sep = '\n')
 ```
 
 For this case, the boundary consists of symmetryPlane, only for patch named floor for the bottom symmetric boundary. The remaining planes of the 2D case are given a zeroGradient boundary condition.
@@ -463,7 +580,7 @@ For this case, the boundary consists of symmetryPlane, only for patch named floo
 The boundary field for chemical potential requires the same boundary condition.
 
 ```{r comment='', echo=FALSE}
-cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar2D/0/mu.orig'), sep = '\n')
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/0/mu.orig'), sep = '\n')
 ```
 
 ### Setting initial field
@@ -475,7 +592,7 @@ The entries of *setFieldsDict* dictionary for this case are kept same as section
 The entries of *transportProperties* dictionary are shown below:
 
 ```{r comment='', echo=FALSE}
-cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar2D/constant/transportProperties'), sep = '\n')
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/constant/transportProperties'), sep = '\n')
 ```
 
 It must be noted that, thermal gradient, $G$ and velocity, $v$ are nonzero for directional solidification. The remaining entries are same as section 1.2.4.
@@ -485,7 +602,7 @@ It must be noted that, thermal gradient, $G$ and velocity, $v$ are nonzero for d
 Similar to section 1.2.5, the startTime and deltaT are specified. The endTime keyword is set to 6000000 to observe the growth of secondary dendrites from the primary dendrite, growing normal to the direction of imposed thermal gradient. The writeInterval can be set to 200000. For this case, the entries in the *controlDict* are shown below:
 
 ```{r comment='', echo=FALSE}
-cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar2D/system/controlDict'), sep = '\n')
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/system/controlDict'), sep = '\n')
 ```
 
 ### Discretisation schemes and solver settings
@@ -497,7 +614,7 @@ The *fvSchemes* and *fvSolution* dictionary entries are kept same as section 1.2
 For this case, the primary dendrite can be expected to grow in the y direction since the thermal gradient is applied in the x direction. Consequently, the secondary dendrites will grow almost uniformly in the x direction (as will be seen later in section 2.5). In order to balance the load between the processors, in the presence of dynamic interface refinement and without stopping the run unlike section 1.3, the subdomains are divided in the y direction. Hence, numberOfSubdomains = 4 and n = (1, 4, 1) are set.
 
 ```{r comment='', echo=FALSE}
-cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar2D/system/decomposeParDict'), sep = '\n')
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/system/decomposeParDict'), sep = '\n')
 ```
 
 Similar to section 1.3, the solver for this case is run parallely using runParallel within *Allrun*.

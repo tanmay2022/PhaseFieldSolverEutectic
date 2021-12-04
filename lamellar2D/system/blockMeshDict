@@ -13,13 +13,13 @@ FoamFile
     object      blockMeshDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-convertToMeters 1;
+convertToMeters 2;
 x_min 0;
-x_max0 180;
-x_max1 240;
-x_max2 300; //3 blocks in direction of growth
+x_max0 90;
+x_max1 120;
+x_max2 150; //3 blocks in direction of growth
 y_min 0;
-y_max 150;
+y_max 80;
 z_min 0;
 z_max 2;
 
@@ -59,9 +59,9 @@ vertices
 
 blocks
 (
-    hex (0 1 2 3 4 5 6 7) ($lx 160 1) simpleGrading (1 1 1)
-    hex (8 9 10 11 12 13 14 15) (30 80 1) simpleGrading (1 1 1)
-    hex (16 17 18 19 20 21 22 23) (15 40 1) simpleGrading (1 1 1)
+    hex (0 1 2 3 4 5 6 7) ($lx 80 1) simpleGrading (1 1 1)
+    hex (8 9 10 11 12 13 14 15) (12 40 1) simpleGrading (1 1 1)
+    hex (16 17 18 19 20 21 22 23) (6 20 1) simpleGrading (1 1 1)
 // for dx = 0.5: simpleGrading (2 2 2) or convertToMeters = 0.5
 );
 
