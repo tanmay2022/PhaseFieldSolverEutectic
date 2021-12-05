@@ -279,10 +279,11 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
 <div class="line">    volVectorField grad_alpha =<a class="code" href="read_transport_properties_8_h.html#af589b6be2b2f8d27fa13e0d974be4e09">dimx</a>*fvc::grad(<a class="code" href="create_fields_8_h.html#ac87f187ecbb436edad610fc305db5b04">phi_alpha</a>)</div>
-<div class="ttc" id="acreate_fields_8_h_html_ac87f187ecbb436edad610fc305db5b04"><div class="ttname"><a href="create_fields_8_h.html#ac87f187ecbb436edad610fc305db5b04">phi_alpha</a></div><div class="ttdeci">volScalarField phi_alpha(IOobject(&quot;phi_alpha&quot;, runTime.timeName(), mesh, IOobject::MUST_READ, IOobject::AUTO_WRITE), mesh)</div></div>
-<div class="ttc" id="aread_transport_properties_8_h_html_af589b6be2b2f8d27fa13e0d974be4e09"><div class="ttname"><a href="read_transport_properties_8_h.html#af589b6be2b2f8d27fa13e0d974be4e09">dimx</a></div><div class="ttdeci">dimensionedScalar dimx(transportProperties.lookup(&quot;dimx&quot;))</div></div>
-</div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="phi__abl__anti_t_8_h_source.html#l00006">6</a> of file <a class="el" href="phi__abl__anti_t_8_h_source.html">phi_abl_antiT.H</a>.</p>
+<div class="ttc" id="acreate_fields_8_h_html_ac87f187ecbb436edad610fc305db5b04"><div class="ttname"><a href="create_fields_8_h.html#ac87f187ecbb436edad610fc305db5b04">phi_alpha</a></div><div class="ttdeci">volScalarField phi_alpha(IOobject(&quot;phi_alpha&quot;, runTime.timeName(), mesh, IOobject::MUST_READ, IOobject::AUTO_WRITE), mesh)</div><div class="ttdoc">Creating phase-fields with the option to write.</div></div>
+<div class="ttc" id="aread_transport_properties_8_h_html_af589b6be2b2f8d27fa13e0d974be4e09"><div class="ttname"><a href="read_transport_properties_8_h.html#af589b6be2b2f8d27fa13e0d974be4e09">dimx</a></div><div class="ttdeci">dimensionedScalar dimx(transportProperties.lookup(&quot;dimx&quot;))</div><div class="ttdoc">Dimension of position.</div></div>
+</div><!-- fragment --><p>Implicit discretization using fvm class for time derivative and laplacian. Explicit discretization using fvc class for gradient and divergence. Phase-field equations with approximate relation between c, mu and T according to the parabolic approximation for free energy </p>
+
+<p class="definition">Definition at line <a class="el" href="phi__abl__anti_t_8_h_source.html#l00009">9</a> of file <a class="el" href="phi__abl__anti_t_8_h_source.html">phi_abl_antiT.H</a>.</p>
 
 </div>
 </div>
@@ -298,7 +299,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="phi__abl__anti_t_8_h_source.html#l00008">8</a> of file <a class="el" href="phi__abl__anti_t_8_h_source.html">phi_abl_antiT.H</a>.</p>
+<p class="definition">Definition at line <a class="el" href="phi__abl__anti_t_8_h_source.html#l00011">11</a> of file <a class="el" href="phi__abl__anti_t_8_h_source.html">phi_abl_antiT.H</a>.</p>
 
 </div>
 </div>
@@ -314,7 +315,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="phi__abl__anti_t_8_h_source.html#l00009">9</a> of file <a class="el" href="phi__abl__anti_t_8_h_source.html">phi_abl_antiT.H</a>.</p>
+<p class="definition">Definition at line <a class="el" href="phi__abl__anti_t_8_h_source.html#l00012">12</a> of file <a class="el" href="phi__abl__anti_t_8_h_source.html">phi_abl_antiT.H</a>.</p>
 
 </div>
 </div>
