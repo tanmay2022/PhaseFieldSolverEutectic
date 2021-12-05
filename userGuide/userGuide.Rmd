@@ -364,7 +364,7 @@ For this case, numberOfSubdomains = 4 and n = (1, 4, 1). When executing *Allrun*
 cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar2D/system/decomposeParDict'), sep = '\n')
 ```
 
-After compiling the solver (see *codeGuide*), it is executed parallely using runParallel within *Allrun*. The progress of the job is stored into *log.phaseFieldDynamic*. It includes the current time, initial and final residuals for all fields.
+After compiling the solver (see *codeGuide*), it is executed in parallel using runParallel within *Allrun*. The progress of the job is stored into *log.eutectic*. It includes the current time, initial and final residuals for all fields.
 
 ## Post-processing
 
@@ -378,11 +378,11 @@ paraview lamellar2D.foam
 
 The phase-fields at steady-state for equal volume fractions of $\alpha$ and $\beta$ phases are shown in Figure 4--6. These are corresponding to the time, when the temperature becomes constant at a particular value despite being different during initialization.
 
-```{r first, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 4: Variation of $\alpha$ phase-field at steady-state."}
+```{r first, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 4: Variation of alpha phase-field at steady-state."}
 knitr::include_graphics('freeGrowth100000.png')
 ```
 
-```{r second, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 5: Variation of $\beta$ phase-field at steady-state."}
+```{r second, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 5: Variation of beta phase-field at steady-state."}
 knitr::include_graphics('freeGrowth1000000.png')
 ```
 
@@ -392,7 +392,7 @@ knitr::include_graphics('freeGrowth2500000.png')
 
 An interesting result is observed, when the simulation is run by changing the equilibrium compositions to $c^{eut}_{\alpha} =$ 0.41 and $c^{eut}_{\beta} =$ 0.71 for 70\% $\alpha$ and 30\% $\beta$ phase. At steady-state, the volume fractions become 70\% $\alpha$ and 30\% $\beta$ despite starting off with equal volume fractions of $\alpha$ and $\beta$, which is shown in Figure 7.
 
-```{r fourth, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 7: Variation of $\alpha$ phase-field at steady-state for equilibrium compositions of 70\% $\alpha$ and 30\% $\beta$ phase."}
+```{r fourth, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 7: Variation of alpha phase-field at steady-state for 70-30 equilibrium composition."}
 knitr::include_graphics('freeGrowth2500000c.png')
 ```
 
@@ -428,7 +428,7 @@ cd \$FOAM_RUN/PhaseFieldSolverEutectic/lamellar3D
 
 ### Mesh generation
 
-A domain of size 160$\times$160$\times$160 with dx of 2 is considered. Similar to section 1.2.1, the graded mesh is obtained by merging three blocks with different refinement.
+A domain of size 160 $\times$ 160 $\times$ 160 with dx of 2 is considered. Similar to section 1.2.1, the graded mesh is obtained by merging three blocks with different refinement.
 
 The entries in *blockMeshDict* located in the *system* directory for this case are as follows:
 
@@ -438,7 +438,7 @@ cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/system/blockM
 
 The generated 3D mesh is shown in Figure 9.
 
-```{r blocklam, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 9: Generated 3D mesh for lamellar case."}
+```{r blocklam, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 9: Generated 3D mesh for lamellar morphology case."}
 knitr::include_graphics('blocklam.png')
 ```
 
@@ -464,18 +464,13 @@ cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/0/mu.orig'), 
 
 ### Setting initial field
 
+Similar to section 1.2.3, a non-uniform initial condition is specified for the phase parameters. The solid-liquid interface is set at 64 units in the growth direction from the origin. The $\alpha$ and $\beta$ phases are distributed randomly in the plane perpendicular to the growth direction.
 
-
-A non-uniform initial condition is specified for the phase parameter, $\phi_i$, where $\phi_i =$ 1.0 inside the phase $i$ and 0 inside phases $j$ and $k$ (with $i, j, k ~\epsilon ~\{\alpha, \beta, liq\}$). And for chemical potential, $\mu$, where $\mu =$ 1.0 in the entire domain. The solid-liquid interface is set at 1.2$D/v$ from the origin.
-
-This is achieved by running the setFields utility. It requires a *setFieldsDict* dictionary, located in the *system* directory, whose entries for this case are shown below:
+The *setFieldsDict* dictionary for this case is shown below:
 
 ```{r comment='', echo=FALSE}
 cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/system/setFieldsDict'), sep = '\n')
-
-
-
-The entries of *setFieldsDict* dictionary for this case are kept same as section 1.2.3.
+```
 
 ### Physical properties
 
@@ -495,89 +490,83 @@ The *fvSchemes* and *fvSolution* dictionary entries are kept same as section 1.2
 
 ## Running the case
 
-For this case, the primary dendrite can be expected to grow in the y direction since the thermal gradient is applied in the x direction. Consequently, the secondary dendrites will grow almost uniformly in the x direction (as will be seen later in section 2.5). In order to balance the load between the processors, in the presence of dynamic interface refinement and without stopping the run unlike section 1.3, the subdomains are divided in the y direction. Hence, numberOfSubdomains = 4 and n = (1, 4, 1) are set.
+For growth direction parallel to x, the domain is divided in the y and z directions to have optimum load balance. Hence, numberOfSubdomains = 4 and n = (1, 2, 2) are set.
 
 ```{r comment='', echo=FALSE}
 cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/system/decomposeParDict'), sep = '\n')
 ```
 
-Similar to section 1.3, the solver for this case is run parallely using runParallel within *Allrun*.
+Similar to section 1.3, the solver for this case is run in parallel using runParallel within *Allrun*.
 
 ## Post-processing
 
-Similar to section 1.4, the results reconstructed to time directories can be viewed by creating and opening the *directionalSolidification.foam* case module using ParaView. The evolution of phase-field profile corresponding to three time steps are shown in Figure 9--11.
+Similar to section 1.4, the results reconstructed to time directories can be viewed by creating and opening the *lamellar3D.foam* case module using ParaView. The $\alpha$-$\beta$ surface area becomes minimized while maintaining equal volume fractions. Further, it establishes the lamellar morphology. The steady-state phase-field profile is shown in Figure 10.
 
-```{r firstb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 9: Phase-field profile at time 200000."}
+```{r firstb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 10: Lamellar morphology at solid-liquid interface at steady-state."}
 knitr::include_graphics('directionalsolidification200000.png')
-```
-
-```{r secondb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 10: Phase-field profile at time 800000."}
-knitr::include_graphics('directionalsolidification800000.png')
-```
-
-```{r thirdb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 11: Phase-field profile at time 3600000."}
-knitr::include_graphics('directionalsolidification3600000.png')
-```
-
-As can be seen from the figures, in the presence of thermal gradient and velocity in the x direction, the primary dendrite grows in the y direction. Later, secondary dendrites start to grow from the primary dendrite unlike the *freeGrowth* case in section 1.4. Also, the chemical potential plot at time 3600000 is shown in Figure 12.
-
-```{r fourthb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 12: Chemical potential at time 3600000."}
-knitr::include_graphics('directionalsolidification3600000c.png')
 ```
 
 # 3D rod eutectic growth
 
-Rod morphology with volume fractions of 70\% $\alpha$ and 30\% $\beta$ phase
+This case pertains to 3D rod morphology with volume fractions of 70\% $\alpha$ and 30\% $\beta$ phase in the plane perpendicular to the growth direction.
 
 ## Problem specification
 
-***Solution domain*** The domain is considered to be two-dimensional in this problem. The rectangular domain consists of an undercooled region as shown in Figure 8.
+***Solution domain*** The domain is considered to be three-dimensional in this problem. The cuboid shaped domain consists of three phases with rod shaped $\beta$ phase parallel to the growth direction embedded within $\alpha$ phase as shown in Figure 11.
 
-```{r geomds, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 8: Geometry of the melt with an undercooled region."}
-knitr::include_graphics('geomds.png')
+```{r geomr3, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 11: Three-dimensional geometry of the rod morphology."}
+knitr::include_graphics('geomr3.png')
 ```
 
 ***Governing equations*** The governing equations used are same as in section 1.1.
 
-***Boundary conditions*** Zero-flux is specified at all planes.
+***Boundary conditions*** Cyclic boundary condition is specified at the top, bottom, front and back planes, and zero-flux is specified at the remaining planes same as in section 2.1.
 
-***Initial conditions*** The initial conditions are same as in section 1.1.
+***Initial conditions*** The initial conditions are same as in section 2.1.
 
-***Physical properties*** The physical properties are same as in section 1.1 except the following (in order to impose thermal gradient and velocity in the x direction):
+***Physical properties*** The physical properties are same as in section 1.1.
 
-* Thermal gradient ($G$) = 1.7e-5
+***Solver name*** *eutectic*.
 
-* Velocity ($v$) = 0.001
-
-***Solver name*** *phaseFieldDynamic*: An implementation with dynamic interface refinement for phase-field method to model solidification of two-phase two-component system.
-
-***Case name*** *directionalSolidification*, located in the *\$FOAM_RUN/PhaseFieldSolverDynamic* directory.
+***Case name*** *rod3D*, located in the *\$FOAM_RUN/PhaseFieldSolverEutectic* directory.
 
 ## Pre-processing
 
 To prepare case files and running the case, the user can change to the case directory:
 
-cd \$FOAM_RUN/PhaseFieldSolverDynamic/directionalSolidification
+cd \$FOAM_RUN/PhaseFieldSolverEutectic/rod3D
 
 ### Mesh generation
 
-The overall process of generating the mesh remains same as in section 1.2.1. However, this case is a symmetric problem. So, only the top half of the whole geometry (shown in Figure 8) is considered. Similarly, graded mesh of 250 by 250 cells (with smaller cells near the left and bottom boundaries) will be used. The entries in *blockMeshDict* located in the *system* directory for this case are as follows:
+A domain of size 400 $\times$ 184 $\times$ 184 with dx of 2 is considered. Similar to section 1.2.1, the graded mesh is obtained by merging three blocks with different refinement.
+
+The entries in *blockMeshDict* located in the *system* directory for this case are as follows:
 
 ```{r comment='', echo=FALSE}
 cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/system/blockMeshDict'), sep = '\n')
 ```
 
+The generated 3D mesh is shown in Figure 12.
+
+```{r blockrod, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 12: Generated 3D mesh for rod morphology case."}
+knitr::include_graphics('blockrod.png')
+```
+
 ### Boundary and initial conditions
 
-Similar to section 1.2.2, the file *phi.orig* in *0* sub-directory of the *directionalSolidification* directory can be examined:
+Similar to section 2.2.2, the *0* sub-directory contains *phi_alpha.orig*, *phi_beta.orig*, *phi_liq.orig*, and *mu.orig*.
 
 ```{r comment='', echo=FALSE}
 cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/0/phi_alpha.orig'), sep = '\n')
 ```
 
-For this case, the boundary consists of symmetryPlane, only for patch named floor for the bottom symmetric boundary. The remaining planes of the 2D case are given a zeroGradient boundary condition.
+```{r comment='', echo=FALSE}
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/0/phi_beta.orig'), sep = '\n')
+```
 
-The boundary field for chemical potential requires the same boundary condition.
+```{r comment='', echo=FALSE}
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/0/phi_liq.orig'), sep = '\n')
+```
 
 ```{r comment='', echo=FALSE}
 cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/0/mu.orig'), sep = '\n')
@@ -585,17 +574,21 @@ cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/0/mu.orig'), sep =
 
 ### Setting initial field
 
-The entries of *setFieldsDict* dictionary for this case are kept same as section 1.2.3.
+Similar to section 1.2.3, a non-uniform initial condition is specified for the phase parameters. The solid-liquid interface is set at 160 units in the growth direction from the origin. The rod shaped $\beta$ phase parallel to the growth direction is embedded within $\alpha$ phase.
+
+The *setFieldsDict* dictionary for this case is shown below:
+
+```{r comment='', echo=FALSE}
+cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/system/setFieldsDict'), sep = '\n')
+```
 
 ### Physical properties
 
-The entries of *transportProperties* dictionary are shown below:
+The entries of *transportProperties* dictionary for this case are kept same as section 1.2.4 except $c^{eut}_{\alpha} =$ 0.41 and $c^{eut}_{\beta} =$ 0.71 for 70\% $\alpha$ and 30\% $\beta$ phase. The entries of *transportProperties* dictionary are shown below:
 
 ```{r comment='', echo=FALSE}
 cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/constant/transportProperties'), sep = '\n')
 ```
-
-It must be noted that, thermal gradient, $G$ and velocity, $v$ are nonzero for directional solidification. The remaining entries are same as section 1.2.4.
 
 ### Time step control
 
@@ -611,34 +604,18 @@ The *fvSchemes* and *fvSolution* dictionary entries are kept same as section 1.2
 
 ## Running the case
 
-For this case, the primary dendrite can be expected to grow in the y direction since the thermal gradient is applied in the x direction. Consequently, the secondary dendrites will grow almost uniformly in the x direction (as will be seen later in section 2.5). In order to balance the load between the processors, in the presence of dynamic interface refinement and without stopping the run unlike section 1.3, the subdomains are divided in the y direction. Hence, numberOfSubdomains = 4 and n = (1, 4, 1) are set.
+Similar to section 2.3, the domain is divided in the y and z directions to have optimum load balance. Hence, numberOfSubdomains = 4 and n = (1, 2, 2) are set.
 
 ```{r comment='', echo=FALSE}
 cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/system/decomposeParDict'), sep = '\n')
 ```
 
-Similar to section 1.3, the solver for this case is run parallely using runParallel within *Allrun*.
-
 ## Post-processing
 
-Similar to section 1.4, the results reconstructed to time directories can be viewed by creating and opening the *directionalSolidification.foam* case module using ParaView. The evolution of phase-field profile corresponding to three time steps are shown in Figure 9--11.
+Similar to section 1.4, the results reconstructed to time directories can be viewed by creating and opening the *rod3D.foam* case module using ParaView. The $\alpha$-$\beta$ surface area becomes minimized while maintaining equal volume fractions. The phase-field profile of rod morphology at steady-state is shown in Figure 13.
 
-```{r firstb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 9: Phase-field profile at time 200000."}
+```{r firstc, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 13: Rod morphology at solid-liquid interface at steady-state."}
 knitr::include_graphics('directionalsolidification200000.png')
-```
-
-```{r secondb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 10: Phase-field profile at time 800000."}
-knitr::include_graphics('directionalsolidification800000.png')
-```
-
-```{r thirdb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 11: Phase-field profile at time 3600000."}
-knitr::include_graphics('directionalsolidification3600000.png')
-```
-
-As can be seen from the figures, in the presence of thermal gradient and velocity in the x direction, the primary dendrite grows in the y direction. Later, secondary dendrites start to grow from the primary dendrite unlike the *freeGrowth* case in section 1.4. Also, the chemical potential plot at time 3600000 is shown in Figure 12.
-
-```{r fourthb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 12: Chemical potential at time 3600000."}
-knitr::include_graphics('directionalsolidification3600000c.png')
 ```
 
 # References
