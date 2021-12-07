@@ -20,7 +20,7 @@ defaultFieldValues
 	volScalarFieldValue phi_alpha 0.0
 	volScalarFieldValue phi_beta 0.0
 	volScalarFieldValue phi_liq 0.0
-	volScalarFieldValue T 0.93
+	volScalarFieldValue T 1.0
 	volScalarFieldValue mu 1.0
 
 );
@@ -39,7 +39,7 @@ regions
 	volScalarFieldValue phi_alpha 1.0
 	volScalarFieldValue phi_beta 0.0
 	volScalarFieldValue phi_liq 0.0
-	volScalarFieldValue T 0.93
+	volScalarFieldValue T 1.0
 	volScalarFieldValue mu 1.0
 	);
 	}
@@ -55,7 +55,7 @@ regions
 	volScalarFieldValue phi_alpha 0.0
 	volScalarFieldValue phi_beta 1.0
 	volScalarFieldValue phi_liq 0.0
-	volScalarFieldValue T 0.93
+	volScalarFieldValue T 1.0
 	volScalarFieldValue mu 1.0
     );
     }
@@ -71,7 +71,7 @@ regions
 	volScalarFieldValue phi_alpha 0.0
 	volScalarFieldValue phi_beta 1.0
 	volScalarFieldValue phi_liq 0.0
-	volScalarFieldValue T 0.93
+	volScalarFieldValue T 1.0
 	volScalarFieldValue mu 1.0
     );
     }
@@ -87,7 +87,7 @@ regions
 	volScalarFieldValue phi_alpha 0.0
 	volScalarFieldValue phi_beta 0.0
 	volScalarFieldValue phi_liq 1.0
-	volScalarFieldValue T 0.93
+	volScalarFieldValue T 1.0
 	volScalarFieldValue mu 1.0
 	);
 	}
