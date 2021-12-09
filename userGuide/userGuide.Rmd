@@ -3,10 +3,10 @@ title: "Phase-field Solver for Eutectic Transformation"
 author: "Tanmay Dutta"
 date: "November 10, 2021"
 output:
-  pdf_document: 
+  html_document: 
     toc: yes
     number_sections: yes
-  html_document: 
+  pdf_document: 
     toc: yes
     number_sections: yes
 urlcolor: blue
@@ -379,21 +379,21 @@ paraview lamellar2D.foam
 The phase-fields at steady-state for equal volume fractions of $\alpha$ and $\beta$ phases are shown in Figure 4--6. These are corresponding to the time, when the temperature becomes constant at a particular value despite being different during initialization.
 
 ```{r first, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 4: Variation of alpha phase-field at steady-state."}
-knitr::include_graphics('freeGrowth100000.png')
+knitr::include_graphics('alpha5050.png')
 ```
 
 ```{r second, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 5: Variation of beta phase-field at steady-state."}
-knitr::include_graphics('freeGrowth1000000.png')
+knitr::include_graphics('beta5050.png')
 ```
 
 ```{r third, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 6: Variation of liquid phase-field at steady-state."}
-knitr::include_graphics('freeGrowth2500000.png')
+knitr::include_graphics('liq5050.png')
 ```
 
 An interesting result is observed, when the simulation is run by changing the equilibrium compositions to $c^{eut}_{\alpha} =$ 0.41 and $c^{eut}_{\beta} =$ 0.71 for 70\% $\alpha$ and 30\% $\beta$ phase. At steady-state, the volume fractions become 70\% $\alpha$ and 30\% $\beta$ despite starting off with equal volume fractions of $\alpha$ and $\beta$, which is shown in Figure 7.
 
 ```{r fourth, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 7: Variation of alpha phase-field at steady-state for 70-30 equilibrium composition."}
-knitr::include_graphics('freeGrowth2500000c.png')
+knitr::include_graphics('alpha7030.png')
 ```
 
 # 3D lamellar eutectic growth
@@ -503,7 +503,7 @@ Similar to section 1.3, the solver for this case is run in parallel using runPar
 Similar to section 1.4, the results reconstructed to time directories can be viewed by creating and opening the *lamellar3D.foam* case module using ParaView. The $\alpha$-$\beta$ surface area becomes minimized while maintaining equal volume fractions. Further, it establishes the lamellar morphology. The steady-state phase-field profile is shown in Figure 10.
 
 ```{r firstb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 10: Lamellar morphology at solid-liquid interface at steady-state."}
-knitr::include_graphics('directionalsolidification200000.png')
+knitr::include_graphics('geoml3.png')
 ```
 
 # 3D rod eutectic growth
@@ -615,7 +615,7 @@ cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/system/decomposePa
 Similar to section 1.4, the results reconstructed to time directories can be viewed by creating and opening the *rod3D.foam* case module using ParaView. The $\alpha$-$\beta$ surface area becomes minimized while maintaining equal volume fractions. The phase-field profile of rod morphology at steady-state is shown in Figure 13.
 
 ```{r firstc, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 13: Rod morphology at solid-liquid interface at steady-state."}
-knitr::include_graphics('directionalsolidification200000.png')
+knitr::include_graphics('geomr3.png')
 ```
 
 # References

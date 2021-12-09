@@ -4,9 +4,9 @@
 using namespace std;
 
 constexpr int MIN = 0;
-constexpr int MAX = 39;
+constexpr int MAX = 1;
 
-constexpr int RAND_NUMS_TO_GENERATE = 20;
+constexpr int RAND_NUMS_TO_GENERATE = 2;
 
 int main()
 {
@@ -22,13 +22,19 @@ int main()
 	}
 	else {
 		cout << "Printing coordinates" << endl;
-		for (int i = MIN; i <= MAX; ++i)
+		for (int i = 0; i <= 39; ++i)
 		{
-			for (int n = 0; n < RAND_NUMS_TO_GENERATE; ++n) {
-			int j = distr(eng);
+			for (int j = 0; j <= 39; ++j) {
+			int n = distr(eng);
 			outpf << "	boxToCell { box (-6 $y_" << i << " $z_" << j << ") (64 $y_" << i+1 << " $z_" << j+1 << "); fieldValues (" << endl;
-			outpf << "	volScalarFieldValue phi_alpha 0.0" << endl;
-			outpf << "	volScalarFieldValue phi_beta 1.0 ); }" << endl; //printed in setFieldsDict format
+            if (n == 0) {
+                outpf << "	volScalarFieldValue phi_alpha 1.0" << endl;
+                outpf << "	volScalarFieldValue phi_beta 0.0 ); }" << endl; //printed in setFieldsDict format
+            }
+            if (n == 1) {
+                outpf << "	volScalarFieldValue phi_alpha 0.0" << endl;
+                outpf << "	volScalarFieldValue phi_beta 1.0 ); }" << endl; //printed in setFieldsDict format
+            }
 			}
 		}
 	}
