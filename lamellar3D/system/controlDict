@@ -23,13 +23,13 @@ startTime       0; // the actual time i.e. runtime.value() or no. of iterations*
 
 stopAt          endTime;
 
-endTime         30.0; //actual time = total_iterations*deltaT
+endTime         500.0; //actual time = total_iterations*deltaT
 
 deltaT          0.2;
 
 writeControl    runTime;
 
-writeInterval   1.0;
+writeInterval   50.0;
 
 purgeWrite      0;
 

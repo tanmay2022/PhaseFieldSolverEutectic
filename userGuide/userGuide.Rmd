@@ -390,12 +390,6 @@ knitr::include_graphics('beta5050.png')
 knitr::include_graphics('liq5050.png')
 ```
 
-An interesting result is observed, when the simulation is run by changing the equilibrium compositions to $c^{eut}_{\alpha} =$ 0.41 and $c^{eut}_{\beta} =$ 0.71 for 70\% $\alpha$ and 30\% $\beta$ phase. At steady-state, the volume fractions become 70\% $\alpha$ and 30\% $\beta$ despite starting off with equal volume fractions of $\alpha$ and $\beta$, which is shown in Figure 7.
-
-```{r fourth, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 7: Variation of alpha phase-field at steady-state for 70-30 equilibrium composition."}
-knitr::include_graphics('alpha7030.png')
-```
-
 # 3D lamellar eutectic growth
 
 This case corresponds to 3D lamellar morphology with equal volume fractions of $\alpha$ and $\beta$ phases initialized randomly in the plane perpendicular to the growth direction.
