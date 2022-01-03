@@ -23,7 +23,7 @@ startTime       0; // the actual time i.e. runtime.value() or no. of iterations*
 
 stopAt          endTime;
 
-endTime         90.0; //actual time = total_iterations*deltaT
+endTime         300.0; //actual time = total_iterations*deltaT
 
 deltaT          0.1;
 
