@@ -458,7 +458,7 @@ cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/0/mu.orig'), 
 
 ### Setting initial field
 
-Similar to section 1.2.3, a non-uniform initial condition is specified for the phase parameters. The solid-liquid interface is set at 64 units in the growth direction from the origin. The $\alpha$ and $\beta$ phases are distributed randomly in the plane perpendicular to the growth direction.
+Similar to section 1.2.3, a non-uniform initial condition is specified for the phase parameters. The solid-liquid interface is set at 64 units in the growth direction from the origin. The $\alpha$ and $\beta$ phases are distributed randomly in the plane perpendicular to the growth direction (The code *randomRegion.cpp* can be used for this purpose).
 
 The *setFieldsDict* dictionary for this case is shown below:
 
