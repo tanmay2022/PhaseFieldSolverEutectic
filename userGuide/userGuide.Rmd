@@ -400,9 +400,9 @@ This case corresponds to 3D lamellar morphology with equal volume fractions of $
 
 ## Problem specification
 
-***Solution domain*** The domain is considered to be three-dimensional in this problem. The cubic domain consists of three phases with random $\alpha$ and $\beta$ phase distribution perpendicular to the growth direction as shown in Figure 8.
+***Solution domain*** The domain is considered to be three-dimensional in this problem. The cubic domain consists of three phases with random $\alpha$ and $\beta$ phase distribution perpendicular to the growth direction as shown in Figure 7.
 
-```{r geoml3, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 8: Three-dimensional geometry of the lamellar morphology."}
+```{r geoml3, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 7: Three-dimensional geometry of the lamellar morphology."}
 knitr::include_graphics('geoml3.png')
 ```
 
@@ -434,9 +434,9 @@ The entries in *blockMeshDict* located in the *system* directory for this case a
 cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/system/blockMeshDict'), sep = '\n')
 ```
 
-The generated 3D mesh is shown in Figure 9.
+The generated 3D mesh is shown in Figure 8.
 
-```{r blocklam, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 9: Generated 3D mesh for lamellar morphology case."}
+```{r blocklam, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 8: Generated 3D mesh for lamellar morphology case."}
 knitr::include_graphics('blocklam.png')
 ```
 
@@ -476,7 +476,7 @@ The entries of *transportProperties* dictionary for this case are kept same as s
 
 ### Time step control
 
-Similar to section 1.2.5, the startTime and deltaT are specified. The endTime keyword is set to 2000 to observe the growth of secondary dendrites from the primary dendrite, growing normal to the direction of imposed thermal gradient. The writeInterval can be set to 100. For this case, the entries in the *controlDict* are shown below:
+Similar to section 1.2.5, the startTime and deltaT are specified. The endTime keyword is set to 10000 to observe the formation of lamellar morphology from the random distribution, growing normal to the direction of imposed thermal gradient. The writeInterval can be set to 500. For this case, the entries in the *controlDict* are shown below:
 
 ```{r comment='', echo=FALSE}
 cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/lamellar3D/system/controlDict'), sep = '\n')
@@ -498,9 +498,9 @@ Similar to section 1.3, the solver for this case is run in parallel using runPar
 
 ## Post-processing
 
-Similar to section 1.4, the results reconstructed to time directories can be viewed by creating and opening the *lamellar3D.foam* case module using ParaView. The $\alpha$-$\beta$ surface area becomes minimized while maintaining equal volume fractions. Further, it establishes the lamellar morphology. The steady-state phase-field profile is shown in Figure 10.
+Similar to section 1.4, the results reconstructed to time directories can be viewed by creating and opening the *lamellar3D.foam* case module using ParaView. The $\alpha$-$\beta$ surface area becomes minimized while maintaining equal volume fractions. Further, it establishes the lamellar morphology. The phase-field profile is shown in Figure 9.
 
-```{r firstb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 10: Lamellar morphology at solid-liquid interface at steady-state."}
+```{r firstb, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 9: Lamellar morphology at solid-liquid interface."}
 knitr::include_graphics('alphalam.png')
 ```
 
@@ -510,9 +510,9 @@ This case pertains to 3D rod morphology with volume fractions of 70\% $\alpha$ a
 
 ## Problem specification
 
-***Solution domain*** The domain is considered to be three-dimensional in this problem. The cuboid shaped domain consists of three phases with rod shaped $\beta$ phase parallel to the growth direction embedded within $\alpha$ phase as shown in Figure 11.
+***Solution domain*** The domain is considered to be three-dimensional in this problem. The cuboid shaped domain consists of three phases with rod shaped $\beta$ phase parallel to the growth direction embedded within $\alpha$ phase as shown in Figure 10.
 
-```{r geomr3, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 11: Three-dimensional geometry of the rod morphology."}
+```{r geomr3, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 10: Three-dimensional geometry of the rod morphology."}
 knitr::include_graphics('geomr3.png')
 ```
 
@@ -544,9 +544,9 @@ The entries in *blockMeshDict* located in the *system* directory for this case a
 cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/system/blockMeshDict'), sep = '\n')
 ```
 
-The generated 3D mesh is shown in Figure 12.
+The generated 3D mesh is shown in Figure 11.
 
-```{r blockrod, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 12: Generated 3D mesh for rod morphology case."}
+```{r blockrod, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 11: Generated 3D mesh for rod morphology case."}
 knitr::include_graphics('blockrod.png')
 ```
 
@@ -590,7 +590,7 @@ cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/constant/transport
 
 ### Time step control
 
-Similar to section 1.2.5, the startTime and deltaT are specified. The endTime keyword is set to 3000 to observe the growth of secondary dendrites from the primary dendrite, growing normal to the direction of imposed thermal gradient. The writeInterval can be set to 100. For this case, the entries in the *controlDict* are shown below:
+Similar to section 1.2.5, the startTime and deltaT are specified. The endTime keyword is set to 3000 to observe the growth of rod morphology normal to the direction of imposed thermal gradient. The writeInterval can be set to 500. For this case, the entries in the *controlDict* are shown below:
 
 ```{r comment='', echo=FALSE}
 cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/system/controlDict'), sep = '\n')
@@ -610,9 +610,9 @@ cat(readLines('~/Documents/run/PhaseFieldSolverEutectic/rod3D/system/decomposePa
 
 ## Post-processing
 
-Similar to section 1.4, the results reconstructed to time directories can be viewed by creating and opening the *rod3D.foam* case module using ParaView. The $\alpha$-$\beta$ phases at the interface display rod morphology while maintaining 70\%-30\% volume fractions. The phase-field profile of rod morphology at steady-state is shown in Figure 13.
+Similar to section 1.4, the results reconstructed to time directories can be viewed by creating and opening the *rod3D.foam* case module using ParaView. The $\alpha$-$\beta$ phases at the interface display rod morphology while maintaining 70\%-30\% volume fractions. The phase-field profile of rod morphology at steady-state is shown in Figure 12.
 
-```{r firstc, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 13: Rod morphology at solid-liquid interface at steady-state."}
+```{r firstc, echo=FALSE, out.width='50%', fig.align = 'center', fig.cap = "Figure 12: Rod morphology at solid-liquid interface at steady-state."}
 knitr::include_graphics('alpharod.png')
 ```
 
